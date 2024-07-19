@@ -1,0 +1,8 @@
+.layout-wrap{
+    .menu-layout{
+        padding: 10px;
+        border-radius: 16px;
+        border: 2px solid rgb(223, 223, 2233);
+        align-items: center;
+    }
+}

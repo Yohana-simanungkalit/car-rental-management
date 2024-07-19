@@ -1,11 +1,15 @@
 import { Button, Card, Col, Row } from "antd";
 import DataMockCar from "./DataMockCar.json";
-import { CarFilled, EditFilled, EditOutlined } from "@ant-design/icons";
+import { CarFilled, EditFilled } from "@ant-design/icons";
+import ReservationForm from "../components/ReservationForm";
+import FormAddCar from "../components/FormAddCar";
+import PageLayout from "../layouts";
+import Car from "./../images/car1.png"
 const { Meta } = Card;
 
 const CarListPage = () => {
     return (
-        <>
+        <PageLayout>
             <Card title="List Cars" extra={<Button type="primary">Add New Car</Button>}>
                 <Row gutter={[16,16]}>
                     {
@@ -16,12 +20,12 @@ const CarListPage = () => {
                                         cover={
                                             <img
                                                 alt="example"
-                                                src={car.image}
+                                                src={Car}
                                             />
                                         }
                                         actions={[
-                                            <EditFilled key="edit"/>,
-                                            <CarFilled/>
+                                            <Button style={{backgroundColor:"orange", color:"white"}} icon={<EditFilled/>}>EDIT</Button>,
+                                            <Button type="primary" icon={<CarFilled/>}>Booking</Button>
                                         ]}
                                     >
                                         <Meta
@@ -35,7 +39,9 @@ const CarListPage = () => {
                     }
                 </Row>
             </Card>
-        </>
+            <ReservationForm/>
+            <FormAddCar/>
+        </PageLayout>
     )
 }
 
