@@ -1,0 +1,49 @@
+{
+    "cars": [
+      {
+        "id": 1,
+        "brand": "Toyota",
+        "model": "Corolla",
+        "year": 2023,
+        "color": "Silver",
+        "pricePerDay": 50,
+        "available": true,
+        "description": "Mobil dengan desain canggih dilengkapi dengan peralatan mewah",
+        "image": "https://example.com/images/toyota_corolla.jpg"
+      },
+      {
+        "id": 2,
+        "brand": "Honda",
+        "model": "Civic",
+        "year": 2022,
+        "color": "Red",
+        "pricePerDay": 60,
+        "available": true,
+        "description": "Mobil dengan desain canggih dilengkapi dengan peralatan mewah",
+        "image": "https://example.com/images/honda_civic.jpg"
+      },
+      {
+        "id": 3,
+        "brand": "Ford",
+        "model": "Mustang",
+        "year": 2021,
+        "color": "Blue",
+        "pricePerDay": 80,
+        "available": false,
+        "description": "Mobil dengan desain canggih dilengkapi dengan peralatan mewah",
+        "image": "https://example.com/images/ford_mustang.jpg"
+      },
+      {
+        "id": 4,
+        "brand": "BMW",
+        "model": "X5",
+        "year": 2023,
+        "color": "Black",
+        "pricePerDay": 100,
+        "available": true,
+        "description": "Mobil dengan desain canggih dilengkapi dengan peralatan mewah",
+        "image": "https://example.com/images/bmw_x5.jpg"
+      }
+    ]
+  }
+  
