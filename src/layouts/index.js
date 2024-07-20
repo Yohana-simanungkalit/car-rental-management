@@ -28,13 +28,13 @@ const PageLayout = (props) => {
                                 <Row>
                                     <Col span={24}>
                                         <div style={{ display: 'flex', justifyContent: 'space-between', gap: '10px' }}>
-                                            <Button type="dashed" style={{ flex: 1 }}>
+                                            <Button type="primary" style={{ flex: 1 }}>
                                                 <Link to="/" style={{ textDecoration: 'none', width: '100%', display: 'block', textAlign: 'center' }}>Dashboard</Link>
                                             </Button>
-                                            <Button type="dashed" style={{ flex: 1 }}>
+                                            <Button type="primary" style={{ flex: 1 }}>
                                                 <Link to="/car-list" style={{ textDecoration: 'none', width: '100%', display: 'block', textAlign: 'center' }}>Available Car</Link>
                                             </Button>
-                                            <Button type="dashed" style={{ flex: 1 }}>
+                                            <Button type="primary" style={{ flex: 1 }}>
                                                 <Link to="/reservation-list" style={{ textDecoration: 'none', width: '100%', display: 'block', textAlign: 'center' }}>Booked Car</Link>
                                             </Button>
                                         </div>
@@ -43,7 +43,7 @@ const PageLayout = (props) => {
                             </div>
                         </Col>
                     </Row>
-                    <Col span={24} style={{ width: "100%", height: "100%", padding: "45px" }}>
+                    <Col span={24} style={{ width: "100%", height: "100%", padding:"20px" }}>
                         {props.children}
                     </Col>
                 </Col>

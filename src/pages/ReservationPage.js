@@ -13,10 +13,11 @@ const ReservationPage = () => {
         <PageLayout>
             <Card title="List Booked Car">
                 <Row gutter={[16,16]}>
+                    <Col span={16}>
                     {
                         DataMockCar.cars.map((car) => {
                             return (
-                                <Col span={12}>
+                                <Col span={24}>
                                     <Card
                                         cover={
                                             <img
@@ -37,6 +38,12 @@ const ReservationPage = () => {
                             )
                         })
                     }
+                    </Col>
+                    <Col span={8}>
+                        <Card title="Tanggal Lewat">
+                            <h1>List Booking </h1>
+                        </Card>
+                    </Col>
                 </Row>
             </Card>
             <ReservationForm/>

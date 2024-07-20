@@ -7,7 +7,7 @@ const DashboardPage = () => {
     return (
         <>
             <PageLayout>
-                <Row gutter={24} style={{ marginTop: "100px" }}>
+                <Row gutter={24} style={{ marginTop: "80px" }}>
                     <Col span={12}>
                         <Row gutter={[16, 32]} style={{ alignItems: "start" }}>
                             <Col span={24}>

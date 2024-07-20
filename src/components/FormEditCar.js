@@ -1,16 +1,16 @@
 import { Input, InputNumber, Modal, Select, Form, Button } from "antd"
 import TextArea from "antd/es/input/TextArea"
 import { useDispatch, useSelector } from "react-redux"
-import { setShowModalCar } from "../slice/cars/carSlice";
+import { setShowModalCar, setShowModalCarEdit } from "../slice/cars/carSlice";
 
-const FormAddCar = () => {
+const FormEditCar = () => {
 
     const carState = useSelector((state) => state.CAR_SLICE);
     const dispatch = useDispatch();
 
     return (
         <>
-            <Modal open={carState.isModalCarOpen} onCancel={() => dispatch(setShowModalCar(false))} title="Add New Car" footer={false}>
+            <Modal open={carState.isModalCarEditOpen} onCancel={() => dispatch(setShowModalCarEdit(false))} title="Edit Car" footer={false}>
                 <Form
                     name="wrap"
                     labelCol={{
@@ -62,7 +62,7 @@ const FormAddCar = () => {
                     </Form.Item>
                     <Form.Item style={{textAlign:"center"}}>
                         <Button type="primary" htmlType="submit">
-                            Add Car
+                            Edit Car
                         </Button>
                     </Form.Item>
                 </Form>
@@ -72,4 +72,4 @@ const FormAddCar = () => {
     )
 }
 
-export default FormAddCar;
+export default FormEditCar;

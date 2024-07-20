@@ -1,15 +1,20 @@
-// Name, initial state, reducers, extraReducers
-
-import { createAction, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const carSlice = createSlice({
     name: "CAR_SLICE",
-    initialState: "",
+    initialState: {
+        isModalCarOpen: false,
+        isModalCarEditOpen: false,
+    },
     reducers: {
-
+        setShowModalCar: (state, action) => {
+            state.isModalCarOpen = action.payload;
+        },
+        setShowModalCarEdit: (state, action) => {
+            state.isModalCarEditOpen = action.payload;
+        }
     }
-    // on going
     });
 
-
+export const {setShowModalCar, setShowModalCarEdit} = carSlice.actions;
 export default carSlice;

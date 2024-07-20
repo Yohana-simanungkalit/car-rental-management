@@ -1,8 +1,14 @@
 import { UploadOutlined } from "@ant-design/icons";
 import { Button, DatePicker, Form, Input, Modal, Select, Upload } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { setShowModalReservation } from "../slice/reservations/reservationSlice";
 const { Option } = Select;
 
 const ReservationForm = () => {
+
+    const reservationState = useSelector((state) => state.RESERVATION_SLICE);
+    const dispatch = useDispatch();
+
     const [form] = Form.useForm();
 
     const onFinish = (values) => {
@@ -25,7 +31,7 @@ const ReservationForm = () => {
     ];
 
     return (
-        <Modal open={false} title="Booking Your Car" footer={false}>
+        <Modal open={reservationState.isModalReservationOpen} onCancel={() => dispatch(setShowModalReservation(false))} title="Booking Your Car" footer={false}>
             <Form
                 form={form}
                 onFinish={onFinish}
