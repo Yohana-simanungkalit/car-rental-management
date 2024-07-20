@@ -1,59 +1,94 @@
-import { Button, Card, Col, Divider, Row } from "antd";
+import { Button, Card, Col, Divider, Image, Row, Space, Tag } from "antd";
 import DataMockCar from "./DataMockCar.json";
-import { CarFilled, EditFilled } from "@ant-design/icons";
+import { CalendarOutlined, CarFilled, ClockCircleFilled, EditFilled, MailFilled, MessageFilled, PhoneFilled, TagFilled, UserOutlined } from "@ant-design/icons";
 import ReservationForm from "../components/ReservationForm";
 import FormAddCar from "../components/FormAddCar";
 import PageLayout from "../layouts";
-import Car from "./../images/car1.png"
-const { Meta } = Card;
+import Car from "./../images/car1.png";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchRental } from "../slice/reservations/reservationSlice";
+import dayjs from "dayjs";
 
 
 const ReservationPage = () => {
-    return(
-        <PageLayout>
-                <Row gutter={[16, 16]} style={{ padding: "40px" }}>
-                    <Col span={16}>
-                    <Row gutter={[16,16]}>
-                    {
-                        DataMockCar.cars.map((car) => {
-                            return (
-                                <Col span={24}>
-                                    <Card
-                                        cover={
-                                            <img
-                                                alt="example"
-                                                src={Car}
-                                            />
-                                        }
-                                        actions={[
-                                            <Button style={{backgroundColor:"red", color:"white"}} icon={<EditFilled/>}>CANCEL</Button>,
-                                        ]}
-                                    >
-                                        <Meta
-                                            title={car.brand}
-                                            description={car.description}
-                                        />
-                                    </Card>
-                                </Col>
-                            )
-                        })
-                    }
-                    </Row>
-                    </Col>
-                    <Col span={8}>
-                        <Card title="Upcoming Booked Date">
-                            <h4>Car 1</h4>
-                            <Divider/>
-                            <h4>Car 1</h4>
-                            <Divider/>
-                            <h4>Car 1</h4>
-                            <Divider/>
-                        </Card>
-                    </Col>
-                </Row>
 
-            <ReservationForm/>
-            <FormAddCar/>
+    const carState = useSelector((state) => state.CAR_SLICE);
+    const reservationState = useSelector((state) => state.RESERVATION_SLICE);
+    const dispatch = useDispatch();
+
+    const today = dayjs();
+    const oneDayFromNow = today.add(1, 'day');
+
+    // Filter reservations ending in one day
+    const endingSoonReservations = reservationState.listReservation?.filter((rental) => {
+        const endDate = dayjs(rental.endDate);
+        return endDate.isSame(oneDayFromNow, 'day');
+    });
+
+    useEffect(() => {
+        dispatch(fetchRental())
+    }, [])
+
+    return (
+        <PageLayout>
+            {console.log("reservationState", reservationState.listReservation)}
+            <Row gutter={[8, 8]} style={{ padding: "20px" }}>
+                <Col span={16}>
+                    <Row gutter={[8, 8]}>
+                        {
+                            reservationState.listReservation?.map((rental) => {
+                                return (
+                                    <Col span={24}>
+                                        <Card title={<strong>{rental?.car?.brand} - {rental?.car?.model} </strong>}
+                                            style={{ boxShadow: '1px 1px 1px #ffcd9f' }}
+                                            extra={
+                                                <Tag icon={<CalendarOutlined />} color="#87d068"><strong>{rental.endDate}</strong></Tag>
+                                            }
+                                        >
+                                            <Row>
+                                                <Col span={10}>
+                                                    <Image
+                                                        width={200}
+                                                        src={Car}
+                                                    />
+                                                </Col>
+                                                <Col span={14}>
+                                                    <Space direction="vertical" style={{ width: '100%' }}>
+                                                        <div style={{ textAlign: 'left' }}><PhoneFilled /> Renter Contact: <strong>{rental.renterName} - {rental.renterContact}</strong></div>
+                                                        <div style={{ textAlign: 'left' }}><MailFilled /> Renter Email: <strong>{rental.renterEmail}</strong></div>
+                                                        <div style={{ textAlign: 'left' }}><TagFilled /> Total Price: <strong>Rp.{rental.totalPrice}</strong></div>
+
+                                                    </Space>
+                                                </Col>
+                                            </Row>
+                                        </Card>
+                                    </Col>
+                                )
+                            })
+                        }
+                    </Row>
+                </Col>
+                <Col span={8}>
+                    <Card title="Upcoming Expirations" style={{boxShadow: '1px 1px 1px #ffcd9f'}}>
+                        {endingSoonReservations && endingSoonReservations.length > 0 ? (
+                            endingSoonReservations.map((rental) => (
+                                <div key={rental.id}>
+                                    <Tag color={"#cd201f"}>End Date {rental.endDate}</Tag>
+                                    <div>{rental.car.model} - {rental.car.brand}</div> 
+                                    <div>Rental By: {rental.renterName} - {rental.renterContact}</div>
+                                    <Divider />
+                                </div>
+                            ))
+                        ) : (
+                            <p>No cars on upcoming expirations.</p>
+                        )}
+                    </Card>
+                </Col>
+            </Row>
+
+            <ReservationForm />
+            <FormAddCar />
         </PageLayout>
     )
 }
