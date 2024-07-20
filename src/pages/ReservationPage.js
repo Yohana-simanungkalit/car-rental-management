@@ -1,14 +1,14 @@
 import { Button, Card, Col, Divider, Empty, Image, Row, Space, Tag } from "antd";
-import DataMockCar from "./DataMockCar.json";
-import { CalendarOutlined, CarFilled, ClockCircleFilled, EditFilled, MailFilled, MessageFilled, PhoneFilled, TagFilled, UserOutlined } from "@ant-design/icons";
+import { CalendarOutlined, CarFilled, ClockCircleFilled, DeleteFilled, EditFilled, MailFilled, MessageFilled, PhoneFilled, TagFilled, UserOutlined } from "@ant-design/icons";
 import ReservationForm from "../components/ReservationForm";
 import FormAddCar from "../components/FormAddCar";
 import PageLayout from "../layouts";
 import Car from "./../images/car5.png";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { deleteReservation, fetchRental } from "../slice/reservations/reservationSlice";
+import { deleteReservation, fetchRental, setShowModalReservationEdit } from "../slice/reservations/reservationSlice";
 import dayjs from "dayjs";
+import ReservationFormEdit from "../components/ReservationEditForm";
 
 
 const ReservationPage = () => {
@@ -25,6 +25,10 @@ const ReservationPage = () => {
         const endDate = dayjs(rental.endDate);
         return endDate.isSame(oneDayFromNow, 'day');
     });
+
+    const onEditReservation = (id) => {
+        dispatch(setShowModalReservationEdit(true));
+    }
 
     useEffect(() => {
         dispatch(fetchRental())
@@ -59,7 +63,10 @@ const ReservationPage = () => {
                                                             <div style={{ textAlign: 'left' }}><PhoneFilled /> Renter Contact: <strong>{rental?.renterName} - {rental.renterContact}</strong></div>
                                                             <div style={{ textAlign: 'left' }}><MailFilled /> Renter Email: <strong>{rental?.renterEmail}</strong></div>
                                                             <div style={{ textAlign: 'left' }}><TagFilled /> Total Price: <strong>Rp.{rental?.totalPrice}</strong></div>
-                                                            <div style={{ textAlign: 'left' }}><Button style={{ backgroundColor: "red", color: "white" }} onClick={() => dispatch(deleteReservation(rental.id))}>Cancel Booking</Button></div>
+                                                            <Space style={{ display:"flex", justifyContent:"end" }}>
+                                                            <div><Button icon={<EditFilled/>} type="link" onClick={() => onEditReservation(rental.id)}>EDIT</Button></div>
+                                                            <div><Button icon={<DeleteFilled/>} type="link" onClick={() => dispatch(deleteReservation(rental.id))}>CANCEL</Button></div>
+                                                            </Space>
                                                         </Space>
                                                     </Col>
                                                 </Row>
@@ -92,9 +99,8 @@ const ReservationPage = () => {
                     </Card>
                 </Col>
             </Row>
-
             <ReservationForm />
-            <FormAddCar />
+            <ReservationFormEdit/>
         </PageLayout>
     )
 }

@@ -1,11 +1,11 @@
 import { UploadOutlined } from "@ant-design/icons";
 import { Button, DatePicker, Form, Input, Modal, Select, Upload } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { postNewReservation, setShowModalReservation } from "../slice/reservations/reservationSlice";
+import { postNewReservation, setShowModalReservation, setShowModalReservationEdit } from "../slice/reservations/reservationSlice";
 import { useEffect } from "react";
 const { Option } = Select;
 
-const ReservationForm = () => {
+const ReservationFormEdit = () => {
 
     const reservationState = useSelector((state) => state.RESERVATION_SLICE);
     const dispatch = useDispatch();
@@ -31,7 +31,7 @@ const ReservationForm = () => {
     }, [reservationState.isModalReservationOpen])
 
     return (
-        <Modal open={reservationState.isModalReservationOpen} onCancel={() => dispatch(setShowModalReservation(false))} title="Booking Your Car" footer={false}>
+        <Modal open={reservationState.isModalReservationEditOpen} onCancel={() => dispatch(setShowModalReservationEdit(false))} title="Edit Your Reservation" footer={false}>
             <Form
                 form={form}
                 onFinish={onFinish}
@@ -102,9 +102,6 @@ const ReservationForm = () => {
                     <Input placeholder="Your Email" />
                 </Form.Item>
 
-                
-
-
                 <Form.Item style={{ textAlign: "center" }}>
                     <Button type="primary" htmlType="submit">
                         Rent Car
@@ -115,4 +112,4 @@ const ReservationForm = () => {
     )
 }
 
-export default ReservationForm;
+export default ReservationFormEdit;

@@ -142,10 +142,14 @@ const reservationSlice = createSlice({
     initialState: {
         isModalReservationOpen: false,
         listReservation: null,
+        isModalReservationEditOpen: false,
     },
     reducers: {
         setShowModalReservation: (state, action) => {
             state.isModalReservationOpen = action.payload;
+        },
+        setShowModalReservationEdit: (state, action) => {
+            state.isModalReservationEditOpen = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -160,5 +164,5 @@ const reservationSlice = createSlice({
     },
 });
 
-export const { setShowModalReservation } = reservationSlice.actions;
+export const { setShowModalReservation, setShowModalReservationEdit } = reservationSlice.actions;
 export default reservationSlice;

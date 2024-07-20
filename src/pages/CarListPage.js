@@ -1,5 +1,4 @@
 import { Button, Card, Col, Empty, Row, Tag } from "antd";
-import DataMockCar from "./DataMockCar.json";
 import { CarFilled, EditFilled, PlusOutlined, TagFilled } from "@ant-design/icons";
 import ReservationForm from "../components/ReservationForm";
 import FormAddCar from "../components/FormAddCar";
