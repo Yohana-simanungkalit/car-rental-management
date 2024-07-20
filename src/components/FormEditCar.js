@@ -1,20 +1,52 @@
-import { Input, InputNumber, Modal, Select, Form, Button } from "antd"
+import { Input, InputNumber, Modal, Select, Form, Button, DatePicker } from "antd"
 import TextArea from "antd/es/input/TextArea"
 import { useDispatch, useSelector } from "react-redux"
 import { setShowModalCar, setShowModalCarEdit } from "../slice/cars/carSlice";
+import { useEffect } from "react";
+import { useForm } from "antd/es/form/Form";
+import dayjs from "dayjs";
+import { postNewReservation } from "../slice/reservations/reservationSlice";
 
 const FormEditCar = () => {
 
     const carState = useSelector((state) => state.CAR_SLICE);
     const dispatch = useDispatch();
+    const [form] = useForm();
+
+    const onFinish = (values) => {
+        const transformedValues = {
+            ...values,
+            year: values.year.format('YYYY') // Convert year to string
+        };
+        console.log('Form Payload:', transformedValues);
+        dispatch(postNewReservation(transformedValues));
+    };
+
+    useEffect(() => {
+        form.resetFields();
+    }, [carState.isModalCarEditOpen])
+
+    useEffect(() => {
+        if (carState.detailCarById) {
+            form.setFieldsValue({
+                model: carState.detailCarById.model,
+                brand: carState.detailCarById.brand,
+                color: carState.detailCarById.color,
+                year: carState.detailCarById.year ? dayjs(carState.detailCarById.year) : null,
+                registrationNumber: carState.detailCarById.registrationNumber,
+                price: carState.detailCarById.price,
+            });
+        }
+    }, [carState.detailCarById])
 
     return (
         <>
             <Modal open={carState.isModalCarEditOpen} onCancel={() => dispatch(setShowModalCarEdit(false))} title="Edit Car" footer={false}>
                 <Form
+                    form={form}
                     name="wrap"
                     labelCol={{
-                        flex: '110px',
+                        flex: '170px',
                     }}
                     labelAlign="left"
                     labelWrap
@@ -26,25 +58,26 @@ const FormEditCar = () => {
                         maxWidth: 600,
                         marginTop: 30,
                     }}
-
+                    onFinish={onFinish} // Handle form submission
                 >
-                    <Form.Item label="Car Name" name="carName" rules={[{ required: true, message: 'Please enter the car name!' }]}>
-                        <Input placeholder="Name" />
+                    <Form.Item label="Car Model" name="model" rules={[{ required: true, message: 'Please enter the model of car!' }]}>
+                        <Input placeholder="Model" />
                     </Form.Item>
-                    <Form.Item label="Car Type" name="carType" rules={[{ required: true, message: 'Please select the car type' }]}>
-                        <Select placeholder="Type">
-                            <Select.Option value="sedan">Sedan</Select.Option>
-                            <Select.Option value="sports">Sports</Select.Option>
-                            <Select.Option value="minivan">Minivan</Select.Option>
-                            <Select.Option value="pickup">Pickup</Select.Option>
-                        </Select>
-                    </Form.Item>
-                    <Form.Item label="Brand" name="label" rules={[{ required: true, message: 'Please enter the brand!' }]}>
+                    <Form.Item label="Car Brand" name="brand" rules={[{ required: true, message: 'Please select the brand of car' }]}>
                         <Input placeholder="Brand" />
+                    </Form.Item>
+                    <Form.Item label="Color" name="color" rules={[{ required: true, message: 'Please enter the color!' }]}>
+                        <Input placeholder="Color" />
+                    </Form.Item>
+                    <Form.Item label="Year" name="year" rules={[{ required: true, message: 'Please enter the year!' }]}>
+                        <DatePicker picker="year" />
+                    </Form.Item>
+                    <Form.Item label="Registration Number" name="registrationNumber" rules={[{ required: true, message: 'Please enter the registration number!' }]}>
+                        <Input placeholder="Registration Number" />
                     </Form.Item>
                     <Form.Item
                         label="Rental Price per Day"
-                        name="rentalPrice"
+                        name="price"
                         rules={[{ required: true, message: 'Please enter the rental price!' }]}
                     >
                         <InputNumber
@@ -53,16 +86,9 @@ const FormEditCar = () => {
                             style={{ width: '100%' }}
                         />
                     </Form.Item>
-                    <Form.Item
-                        label="Description"
-                        name="description"
-                        rules={[{ required: true, message: 'Please enter the description!' }]}
-                    >
-                        <TextArea rows={4} placeholder="Car Description" />
-                    </Form.Item>
-                    <Form.Item style={{textAlign:"center"}}>
+                    <Form.Item style={{ textAlign: "center" }}>
                         <Button type="primary" htmlType="submit">
-                            Edit Car
+                            Add Car
                         </Button>
                     </Form.Item>
                 </Form>

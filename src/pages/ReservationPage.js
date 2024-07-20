@@ -1,13 +1,13 @@
-import { Button, Card, Col, Divider, Image, Row, Space, Tag } from "antd";
+import { Button, Card, Col, Divider, Empty, Image, Row, Space, Tag } from "antd";
 import DataMockCar from "./DataMockCar.json";
 import { CalendarOutlined, CarFilled, ClockCircleFilled, EditFilled, MailFilled, MessageFilled, PhoneFilled, TagFilled, UserOutlined } from "@ant-design/icons";
 import ReservationForm from "../components/ReservationForm";
 import FormAddCar from "../components/FormAddCar";
 import PageLayout from "../layouts";
-import Car from "./../images/car1.png";
+import Car from "./../images/car5.png";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { fetchRental } from "../slice/reservations/reservationSlice";
+import { deleteReservation, fetchRental } from "../slice/reservations/reservationSlice";
 import dayjs from "dayjs";
 
 
@@ -35,48 +35,54 @@ const ReservationPage = () => {
             {console.log("reservationState", reservationState.listReservation)}
             <Row gutter={[8, 8]} style={{ padding: "20px" }}>
                 <Col span={16}>
-                    <Row gutter={[8, 8]}>
-                        {
-                            reservationState.listReservation?.map((rental) => {
-                                return (
-                                    <Col span={24}>
-                                        <Card title={<strong>{rental?.car?.brand} - {rental?.car?.model} </strong>}
-                                            style={{ boxShadow: '1px 1px 1px #ffcd9f' }}
-                                            extra={
-                                                <Tag icon={<CalendarOutlined />} color="#87d068"><strong>{rental.endDate}</strong></Tag>
-                                            }
-                                        >
-                                            <Row>
-                                                <Col span={10}>
-                                                    <Image
-                                                        width={200}
-                                                        src={Car}
-                                                    />
-                                                </Col>
-                                                <Col span={14}>
-                                                    <Space direction="vertical" style={{ width: '100%' }}>
-                                                        <div style={{ textAlign: 'left' }}><PhoneFilled /> Renter Contact: <strong>{rental.renterName} - {rental.renterContact}</strong></div>
-                                                        <div style={{ textAlign: 'left' }}><MailFilled /> Renter Email: <strong>{rental.renterEmail}</strong></div>
-                                                        <div style={{ textAlign: 'left' }}><TagFilled /> Total Price: <strong>Rp.{rental.totalPrice}</strong></div>
-
-                                                    </Space>
-                                                </Col>
-                                            </Row>
-                                        </Card>
-                                    </Col>
-                                )
-                            })
-                        }
-                    </Row>
+                        <Row gutter={[8, 8]}>
+                            {reservationState.listReservation ?
+                                reservationState.listReservation?.map((rental) => {
+                                    return (
+                                        <Col span={24}>
+                                            <Card title={<strong>{rental?.car?.brand} - {rental?.car?.model} </strong>}
+                                                style={{ boxShadow: '1px 1px 1px #ffcd9f' }}
+                                                extra={
+                                                    <Tag icon={<CalendarOutlined />} color="#87d068"><strong>{rental?.startDate} - {rental?.endDate}</strong></Tag>
+                                                }
+                                            >
+                                                <Row>
+                                                    <Col span={10}>
+                                                        <Image
+                                                            width={200}
+                                                            height={110}
+                                                            src={Car}
+                                                        />
+                                                    </Col>
+                                                    <Col span={14}>
+                                                        <Space direction="vertical" style={{ width: '100%' }}>
+                                                            <div style={{ textAlign: 'left' }}><PhoneFilled /> Renter Contact: <strong>{rental?.renterName} - {rental.renterContact}</strong></div>
+                                                            <div style={{ textAlign: 'left' }}><MailFilled /> Renter Email: <strong>{rental?.renterEmail}</strong></div>
+                                                            <div style={{ textAlign: 'left' }}><TagFilled /> Total Price: <strong>Rp.{rental?.totalPrice}</strong></div>
+                                                            <div style={{ textAlign: 'left' }}><Button style={{ backgroundColor: "red", color: "white" }} onClick={() => dispatch(deleteReservation(rental.id))}>Cancel Booking</Button></div>
+                                                        </Space>
+                                                    </Col>
+                                                </Row>
+                                            </Card>
+                                        </Col>
+                                    )
+                                })
+                                :
+                                <Col span={24} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
+                                    <Empty description="No Reservations" />
+                                </Col>
+                            }
+                        </Row>
                 </Col>
                 <Col span={8}>
-                    <Card title="Upcoming Expirations" style={{boxShadow: '1px 1px 1px #ffcd9f'}}>
+                    <Card title="Upcoming Expirations" style={{ boxShadow: '1px 1px 1px #ffcd9f' }}>
                         {endingSoonReservations && endingSoonReservations.length > 0 ? (
                             endingSoonReservations.map((rental) => (
                                 <div key={rental.id}>
                                     <Tag color={"#cd201f"}>End Date {rental.endDate}</Tag>
-                                    <div>{rental.car.model} - {rental.car.brand}</div> 
-                                    <div>Rental By: {rental.renterName} - {rental.renterContact}</div>
+                                    <div>{rental.car.model} - {rental.car.brand}</div>
+                                    <div>Total: Rp.{rental.car.price}</div>
+                                    <div><Button type="link">{rental.renterContact} - {rental.renterName} (Remind)</Button> </div>
                                     <Divider />
                                 </div>
                             ))
