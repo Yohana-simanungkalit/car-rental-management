@@ -2,13 +2,14 @@ import { Button, Col, Divider, Row, Space } from "antd";
 import "./style.css";
 import { Link } from "react-router-dom";
 import logo from "../images/logo.png"
+import { PhoneFilled, PhoneTwoTone } from "@ant-design/icons";
 
 const PageLayout = (props) => {
     return (
         <>
-            <Row className="layout-wrap">
+            <Row className="layout-wrap" >
                 <Col span={24}>
-                    <Row>
+                    <Row >
                         <Col span={6} style={{ display: "flex", alignItems: "center" }}>
                             <img
                                 src={logo}
@@ -28,13 +29,13 @@ const PageLayout = (props) => {
                                 <Row>
                                     <Col span={24}>
                                         <div style={{ display: 'flex', justifyContent: 'space-between', gap: '10px' }}>
-                                            <Button type="primary" style={{ flex: 1 }}>
+                                            <Button style={{backgroundColor:"#fa993e", color:"white",  flex: 1}}>
                                                 <Link to="/" style={{ textDecoration: 'none', width: '100%', display: 'block', textAlign: 'center' }}>Dashboard</Link>
                                             </Button>
-                                            <Button type="primary" style={{ flex: 1 }}>
+                                            <Button style={{backgroundColor:"#fa993e", color:"white",  flex: 1}}>
                                                 <Link to="/car-list" style={{ textDecoration: 'none', width: '100%', display: 'block', textAlign: 'center' }}>Available Car</Link>
                                             </Button>
-                                            <Button type="primary" style={{ flex: 1 }}>
+                                            <Button style={{backgroundColor:"#fa993e", color:"white",  flex: 1}}>
                                                 <Link to="/reservation-list" style={{ textDecoration: 'none', width: '100%', display: 'block', textAlign: 'center' }}>Booked Car</Link>
                                             </Button>
                                         </div>

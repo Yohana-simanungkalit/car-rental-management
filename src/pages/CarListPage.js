@@ -19,35 +19,33 @@ const CarListPage = () => {
 
     return (
         <PageLayout>
-            <Card title="List Cars" extra={<Button type="primary" onClick={() => dispatch(setShowModalCar(true))}>Add New Car</Button>}>
-                <Row gutter={[16, 16]}>
-                    {
-                        DataMockCar.cars.map((car) => {
-                            return (
-                                <Col span={12}>
-                                    <Card
-                                        cover={
-                                            <img
-                                                alt="example"
-                                                src={Car}
-                                            />
-                                        }
-                                        actions={[
-                                            <Button style={{ backgroundColor: "orange", color: "white" }} icon={<EditFilled />} onClick={() => dispatch(setShowModalCarEdit(true))}>EDIT</Button>,
-                                            <Button type="primary" icon={<CarFilled />} onClick={() => dispatch(setShowModalReservation(true))}>BOOKING</Button>
-                                        ]}
-                                    >
-                                        <Meta
-                                            title={car.brand}
-                                            description={car.description}
+            <Row gutter={[16, 16]} style={{ padding: "40px" }}>
+                {
+                    DataMockCar.cars.map((car) => {
+                        return (
+                            <Col span={8}>
+                                <Card
+                                    cover={
+                                        <img
+                                            alt="example"
+                                            src={Car}
                                         />
-                                    </Card>
-                                </Col>
-                            )
-                        })
-                    }
-                </Row>
-            </Card>
+                                    }
+                                    actions={[
+                                        <Button style={{ backgroundColor: "orange", color: "white" }} icon={<EditFilled />} onClick={() => dispatch(setShowModalCarEdit(true))}>EDIT</Button>,
+                                        <Button type="primary" icon={<CarFilled />} onClick={() => dispatch(setShowModalReservation(true))}>BOOKING</Button>
+                                    ]}
+                                >
+                                    <Meta
+                                        title={car.brand}
+                                        description={car.description}
+                                    />
+                                </Card>
+                            </Col>
+                        )
+                    })
+                }
+            </Row>
             <ReservationForm />
             <FormAddCar />
             <FormEditCar />

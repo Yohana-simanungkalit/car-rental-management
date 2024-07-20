@@ -1,4 +1,4 @@
-import { Button, Card, Col, Row } from "antd";
+import { Button, Card, Col, Divider, Row } from "antd";
 import DataMockCar from "./DataMockCar.json";
 import { CarFilled, EditFilled } from "@ant-design/icons";
 import ReservationForm from "../components/ReservationForm";
@@ -11,9 +11,9 @@ const { Meta } = Card;
 const ReservationPage = () => {
     return(
         <PageLayout>
-            <Card title="List Booked Car">
-                <Row gutter={[16,16]}>
+                <Row gutter={[16, 16]} style={{ padding: "40px" }}>
                     <Col span={16}>
+                    <Row gutter={[16,16]}>
                     {
                         DataMockCar.cars.map((car) => {
                             return (
@@ -38,14 +38,20 @@ const ReservationPage = () => {
                             )
                         })
                     }
+                    </Row>
                     </Col>
                     <Col span={8}>
-                        <Card title="Tanggal Lewat">
-                            <h1>List Booking </h1>
+                        <Card title="Upcoming Booked Date">
+                            <h4>Car 1</h4>
+                            <Divider/>
+                            <h4>Car 1</h4>
+                            <Divider/>
+                            <h4>Car 1</h4>
+                            <Divider/>
                         </Card>
                     </Col>
                 </Row>
-            </Card>
+
             <ReservationForm/>
             <FormAddCar/>
         </PageLayout>
